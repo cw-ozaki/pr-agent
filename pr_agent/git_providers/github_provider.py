@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 from typing import Optional, Tuple
 from urllib.parse import urlparse
+from pprint import pprint
 
 from github import AppAuthentication, Github, Auth
 
@@ -22,6 +23,7 @@ class GithubProvider(GitProvider):
         self.pr = None
         self.github_user_id = None
         self.diff_files = None
+        pprint(incremental)
         self.incremental = incremental
         if pr_url:
             self.set_pr(pr_url)
@@ -36,6 +38,7 @@ class GithubProvider(GitProvider):
     def set_pr(self, pr_url: str):
         self.repo, self.pr_num = self._parse_pr_url(pr_url)
         self.pr = self._get_pr()
+        pprint(self.incremental)
         if self.incremental.is_incremental:
             self.get_incremental_commits()
 
